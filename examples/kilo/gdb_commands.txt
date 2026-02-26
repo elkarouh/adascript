@@ -1,0 +1,6 @@
+set pagination off
+break editorOpen
+run test.txt
+backtrace
+continue
+quit

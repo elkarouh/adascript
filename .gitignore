@@ -1,0 +1,27 @@
+# Nim compiled files
+*.nimble.d
+nimcache/
+.cache/
+
+# Editor directories
+.zed/
+.claude/
+
+# Test binaries
+TEST/test_*
+!TEST/*.nim
+!TEST/*.el
+!TEST/*.cfg
+
+# Build artifacts
+*.o
+*.so
+*.dll
+*.exe
+examples/kilo/kilo
+examples/show_status/show_status
+
+# Backup files
+*.bak
+*~
+examples/argparsing/argparse
