@@ -36,7 +36,7 @@ begin:
   m = [[1.0, 2.0, 3.0, 4.0],
        [5.0, 6.0, 7.0, 8.0],
        [9.0, 10.0, 11.0, 12.0]]
-  echo "Matrix: ", m
+  print "Matrix: ", m
 ```
 
 ### 3. Ada-style Tick Attributes
@@ -46,12 +46,12 @@ Access enum and sequence metadata with `^` operator:
 ```nim
 type Color = enum Red, Green, Blue
 
-echo Color^First    # Red
-echo Color^Last     # Blue
-echo Color^Length   # 3
+print Color^First    # Red
+print Color^Last     # Blue
+print Color^Length   # 3
 
 for c in Color:
-  echo c
+  print c
 ```
 
 ### 4. Ada-style Switch/Case
@@ -59,13 +59,18 @@ for c in Color:
 Clean case statements with `when` and `when others`:
 
 ```nim
-switch status:
-  when Status.Ok:
-    echo "Success"
-  when Status.Error:
-    echo "Failed"
+
+let person = ("Alice", 30, true)
+
+switch person:
+  when ("Alice", _, true):
+    print "Alice is employed"
+  when (_, 30, _):
+    print "Someone is 30 years old"
+  when (_, _, false):
+    print "Someone is not employed"
   when others:
-    echo "Unknown"
+    print "I don’t know"  
 ```
 
 ### 5. Optional Types with `?`
@@ -97,7 +102,7 @@ proc findUser(id: int): Option[string] =
 
 let user = findUser(1)
 if user.isSome:
-  echo "Found: ", user.get
+  print "Found: ", user.get
 
 var cache: Option[seq[string]] = none(seq[string])
 
@@ -111,7 +116,7 @@ def findUser(id: int) -> ?string:
 
 let user = findUser(1)
 if user != None:
-  echo "Found: ", user.get
+  print "Found: ", user.get
 
 globals:
   var cache: ?[]string = None
@@ -199,7 +204,7 @@ virtual class Circle(Shape):
 # Dynamic dispatch through base type
 var shapes: seq[Shape] = @[newCircle(5.0), newCircle(1.0)]
 for s in shapes:
-  echo s.area()  # calls Circle.area(), not Shape.area()
+  print s.area()  # calls Circle.area(), not Shape.area()
 ```
 
 ### 9. Shell Command Execution
@@ -208,17 +213,17 @@ Run shell commands with full integration:
 
 ```nim
 # Basic usage
-let result = shell: echo "hello"
-echo result.output
+let result = shell: print "hello"
+print result.output
 
 # Variable interpolation
 let name = "world"
-let result = shell: echo "hello {name}"
+let result = shell: print "hello {name}"
 
 # Get output as lines
 let lines = shellLines: ls -la
 for line in lines:
-  echo line
+  print line
 
 # Working directory
 let result = shell(cwd = "/tmp"): pwd
@@ -233,7 +238,7 @@ Ada-style infinite loop:
 
 ```nim
 loop:
-  echo "Running..."
+  print "Running..."
   if done:
     break
 ```
@@ -284,12 +289,12 @@ def connect(host: string, port: ?int) -> ?string:
 
 let addr = connect("localhost", some(8080))
 if addr != None:
-  echo "Connected to ", addr.get
+  print "Connected to ", addr.get
 
 # Shell commands with variable interpolation
-let lines = shellLines: echo "test"; echo "output"
+let lines = shellLines: print "test"; print "output"
 for line in lines:
-  echo "Line: ", line
+  print "Line: ", line
 
 # Ada-style loop
 var count = 0
@@ -298,7 +303,7 @@ loop:
   if count >= 5:
     break
 
-echo "Done!"
+print "Done!"
 ```
 
 ### Test Suite
