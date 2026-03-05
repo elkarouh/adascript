@@ -3,8 +3,6 @@ import std/strutils
 import adascript
 
 globals:
-  type Point = (float, float)
-  # Destructuring let (x, y) = p or in a for loop or case statement
   var inputFile: string
   var outputFile: string = "output.txt"
   var verbose: bool = false
