@@ -45,7 +45,14 @@ proc isArrayDSLPattern(expr: NimNode): bool =
       result = false
   of nnkBracketExpr:
     # Direct bracket expression [size, elementType]
-    result = true
+    # But NOT if first child is an ident (e.g., seq[string], Table[K,V])
+    if expr.len >= 1 and expr[0].kind == nnkIdent:
+      result = false
+    else:
+      result = true
+
+
+
   of nnkCurlyExpr:
     # Direct curly expression {keyType, valueType} or {elementType}
     result = true
@@ -287,12 +294,15 @@ proc buildNestedArrayType(expr: NimNode): NimNode =
 
   of nnkBracketExpr:
     # Direct bracket expression [size, elementType]
-    if expr.len == 2:
+    # But NOT if first child is an ident (e.g., seq[string], Table[K,V])
+    if expr.len == 2 and expr[0].kind != nnkIdent:
       let arrayType = newNimNode(nnkBracketExpr)
       arrayType.add(ident("array"))
       arrayType.add(expr[0])
       arrayType.add(expr[1])
       return arrayType
+    elif expr.len == 2 and expr[0].kind == nnkIdent:
+      return expr
     else:
       dslError("Expected bracket expression [size, elementType] with 2 elements, got " & $expr.len, expr)
 

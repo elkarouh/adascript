@@ -297,6 +297,7 @@ proc buildDefProc(head, body: NimNode, exported: bool): NimNode =
   result.add(pragmas)
   result.add(newEmptyNode())
   result.add(transformedBody)
+proc transformDefBody(body: NimNode): NimNode  # forward declaration
 
 proc expandDef*(stmt: NimNode): NimNode =
   ## Convert a 'def' command node into a nnkProcDef node (for use inside class)
@@ -304,7 +305,7 @@ proc expandDef*(stmt: NimNode): NimNode =
     return nil
   if stmt.len != 3:
     return nil
-  return buildDefProc(stmt[1], stmt[^1], false)
+  return buildDefProc(stmt[1], transformDefBody(stmt[^1]), false)
 
 proc injectSelfType(procDef: NimNode, typeName: NimNode): NimNode =
   ## Inject the class type for bare `self` or `self: var` parameters.
