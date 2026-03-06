@@ -2,6 +2,7 @@
 
 **Ada/Python-style syntax extensions for Nim**
 
+CAUTION: This is not production-ready. Use with caution. It needs more testing.
 AdaScript provides a collection of Nim macros that enable more expressive, readable code by borrowing syntax patterns from Ada, Python, and Odin.
 
 ## Features
